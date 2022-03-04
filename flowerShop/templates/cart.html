@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+        <!-- breadcrumb-area start -->
+        <div class="breadcrumb-area section-ptb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="breadcrumb-title">Cart</h2>
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list">
+                            <li class="breadcrumb-item"><a href="{% url 'mainApp:home' %}">Home</a></li>
+                            <li class="breadcrumb-item active">Cart</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- breadcrumb-area end -->
+
+
+        <!-- main-content-wrap start -->
+        <div class="main-content-wrap section-ptb cart-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <form action="#" class="cart-table">
+                            <div class="table-content table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="plantmore-product-thumbnail">SN</th>
+                                            <th class="cart-product-name">Product</th>
+                                            <th class="plantmore-product-price">Unit Price</th>
+                                            <th class="plantmore-product-quantity">Quantity</th>
+                                            <th class="plantmore-product-subtotal">Total</th>
+                                            <th class="plantmore-product-remove">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for cp in cart.cartproduct_set.all %}
+                                        
+                                        <tr>
+                                            <td class="plantmore-product-price"><span class="amount">{{forloop.counter}}</span></td>
+                                            <td class="plantmore-product-name"><a href="">{{cp.product.title}}</a></td>
+                                            <td class="plantmore-product-price"><span class="amount">Rs. {{cp.rate}}</span></td>
+                                            <td class="plantmore-product-quantity">
+                                                <input value="{{cp.quantity}}" type="">
+                                                <a href="#"><i class="ion-plus"></i></a>
+                                                <a href="#"><i class="ion-minus"></i></a>
+                                            </td>
+                                            <td class="product-subtotal"><span class="amount">Rs. {{cp.subtotal}}</span></td>
+                                            <td class="plantmore-product-remove">
+                                                <a href="#"><i class="ion-close"></i></a> 
+                                              
+                                            </td>
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="coupon-all">
+
+                                        <div class="coupon2">
+                                            <!-- <input class="submit btn" name="update_cart" value="Update cart" type="submit"> -->
+                                            <a href="{% url 'mainApp:shop' %}" class="btn continue-btn">Continue Shopping</a>
+                                        </div>
+
+                                        <!-- <div class="coupon">
+                                            <h3>Coupon</h3>
+                                            <p>Enter your coupon code if you have one.</p>
+                                            <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
+                                            <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ml-auto">
+                                    <div class="cart-page-total">
+                                        <h2>Cart totals</h2>
+                                        <ul>
+                                            <!-- <li>Subtotal <span>Rs. {{cart.total}}</span></li>
+                                            <li>Discount <span>Tomorrow</span></li> -->
+                                            <li>Total <span>Rs. {{cart.total}}</span></li>
+                                        </ul>
+                                        <a href="#" class="proceed-checkout-btn">Proceed to checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main-content-wrap end -->
+
+
+
+
+{% endblock %}
