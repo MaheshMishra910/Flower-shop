@@ -72,7 +72,9 @@
                                     <div class="coupon-all">
 
                                         <div class="coupon2">
-                                            <!-- <input class="submit btn" name="update_cart" value="Update cart" type="submit"> -->
+                                            {% if cart.cartproduct_set.all %}
+                                            <a href="{% url 'mainApp:emptycart' %}" class="btn continue-btn">Empty cart</a>
+                                            {% endif %}
                                             <a href="{% url 'mainApp:shop' %}" class="btn continue-btn">Continue Shopping</a>
                                         </div>
 
