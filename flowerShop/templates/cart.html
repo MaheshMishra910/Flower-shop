@@ -49,13 +49,14 @@
                                             <td class="plantmore-product-name"><a href="">{{cp.product.title}}</a></td>
                                             <td class="plantmore-product-price"><span class="amount">Rs. {{cp.rate}}</span></td>
                                             <td class="plantmore-product-quantity">
-                                                <input value="{{cp.quantity}}" type="">
-                                                <a href="#"><i class="ion-plus"></i></a>
-                                                <a href="#"><i class="ion-minus"></i></a>
+                                                
+                                                <l>({{cp.quantity}})</l>
+                                                <a href="{% url 'mainApp:managecart' cp.id %}?action=inc"><i class="ion-plus"></i> </a>
+                                                <a href="{% url 'mainApp:managecart' cp.id %}?action=dcr"><i class="ion-minus"></i></a>
                                             </td>
                                             <td class="product-subtotal"><span class="amount">Rs. {{cp.subtotal}}</span></td>
                                             <td class="plantmore-product-remove">
-                                                <a href="#"><i class="ion-close"></i></a> 
+                                                <a href="{% url 'mainApp:managecart' cp.id %}?action=rmv"><i class="ion-close"></i></a> 
                                               
                                             </td>
                                             
