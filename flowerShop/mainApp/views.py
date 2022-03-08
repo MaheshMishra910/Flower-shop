@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, CreateView
+
+from mainApp.forms import CheckoutForm
 from .models import *
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -149,7 +152,19 @@ class MyCartView(TemplateView):
         context['cart'] = cart
         return context
 
-
+class CheckoutView(CreateView):
+    template_name = "checkout.html"
+    from_class = CheckoutForm
+    sucess_url = reverse_lazy("mainApp:home")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart_id = self.request.session.get("cart_id", None)
+        if cart_id:
+            cart_obj = Cart.objects.get(id=cart_id)
+        else:
+            cart_obj = None
+        context['cart'] = cart_obj
+        return context
 
 
 

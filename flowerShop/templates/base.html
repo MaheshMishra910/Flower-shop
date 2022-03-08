@@ -78,7 +78,7 @@
                                                     <ul>
                                                         
                                                         <li><a href="{% url 'mainApp:productdetail' ap.slug %">Product Details 2</a></li>
-                                                        <li><a href="checkout.html">Checkout Page</a></li>
+                                                        <li><a href="{% url 'mainApp:checkout' %}">Checkout Page</a></li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="#">Column Three</a>
@@ -158,7 +158,7 @@
                                         <li class="mini-cart-btns">
                                             <div class="cart-btns">
                                                 <a href="{% url 'mainApp:mycart' %}">View cart</a>
-                                                <a href="checkout.html">Checkout</a>
+                                                <a href="{% url 'mainApp:checkout' %}">Checkout</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -231,13 +231,13 @@
                                                 <ul class="dropdown">
                                                     <li><a href="product-details.html">Product Details 1</a></li>
                                                     <li><a href="{% url 'mainApp:productdetail' ap.slug %">Product Details 2</a></li>
-                                                    <li><a href="checkout.html">Checkout Page</a></li>
+                                                    <li><a href="{% url 'mainApp:checkout' %}">Checkout Page</a></li>
                                                 </ul>
                                             </li>
                                             <li class="mega-title has-children"><a href="#">Column Three</a>
                                                 <ul class="dropdown">
                                                     <li><a href="error404.html">Error 404</a></li>
-                                                    <li><a href="cart.html">Cart Page</a></li>
+                                                    <li><a href="{% url 'mainApp:mycart' %}">Cart Page</a></li>
                                                     <li><a href="wishlist.html">Wish List Page</a></li>
                                                 </ul>
                                             </li>

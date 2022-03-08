@@ -94,7 +94,9 @@
                                             <li>Discount <span>Tomorrow</span></li> -->
                                             <li>Total <span>Rs. {{cart.total}}</span></li>
                                         </ul>
-                                        <a href="#" class="proceed-checkout-btn">Proceed to checkout</a>
+                                        {% if cart.cartproduct_set.all %}
+                                        <a href="{% url 'mainApp:checkout' %}" class="proceed-checkout-btn">Proceed to checkout</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
