@@ -1,9 +1,11 @@
+from urllib import request
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, CreateView
 
-from mainApp.forms import CheckoutForm
+from .forms import CheckoutForm
 from .models import *
 from django.urls import reverse_lazy
+
 
 # Create your views here.
 
@@ -11,11 +13,39 @@ from django.urls import reverse_lazy
 class HomeView(TemplateView):
     template_name = "index-2.html"
 
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_list'] = Product.objects.all().order_by("-id")[:8]
         return context
     
+
+# def get_context(request):
+#     if request.method == 'POST':
+#         order = Order()
+#         full_name = request.POST['fname']
+#         address = request.POST['address']
+#         phone = request.POST['pnumber']
+#         memail = request.POST['femail']
+
+#         order.ordered_by = full_name
+#         order.email = memail
+#         order.shipping_address = address
+#         order.mobile = phone
+#         cart_id = request.session.get("cart_id")
+#         if cart_id:
+#             cart_obj = Cart.objects.get(id=cart_id)
+#             order.cart = cart_obj
+#             order.subtotal = cart_obj.total
+#             order.discount = 0
+#             order.total = cart_obj.total
+#             order.order_status = "Order Received"
+#             del request.session['cart_id']  
+#             order.save()
+		
+#     return render(request, 'checkout.html')
+
     
 
 
@@ -152,10 +182,11 @@ class MyCartView(TemplateView):
         context['cart'] = cart
         return context
 
-class CheckoutView(CreateView):
+class CheckoutView(TemplateView):
     template_name = "checkout.html"
     from_class = CheckoutForm
     sucess_url = reverse_lazy("mainApp:home")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_id = self.request.session.get("cart_id", None)
@@ -165,6 +196,52 @@ class CheckoutView(CreateView):
             cart_obj = None
         context['cart'] = cart_obj
         return context
+
+    # def form_valid(self, form):
+    #     cart_id = self.request.session.get("cart_id")
+    #     if cart_id:
+    #         cart_obj = Cart.objects.get(id=cart_id)
+    #         form.instance.cart = cart_obj
+    #         form.instance.subtotal = cart_obj.total
+    #         form.instance.discount = 0
+    #         form.instance.total = cart_obj.total
+    #         form.instance.order_status = "Order Received"
+    #         del self.request.session['cart_id']   
+    #     else: 
+    #         return redirect("mainApp:home")
+    #     return super().form_valid(form)
+
+
+    def get_context(request):
+        if request.method == 'POST':
+            order = Order()
+            full_name = request.POST['fname']
+            address = request.POST['address']
+            phone = request.POST['pnumber']
+            memail = request.POST['femail']
+
+            order.ordered_by = full_name
+            order.email = memail
+            order.shipping_address = address
+            order.mobile = phone
+            cart_id = request.session.get("cart_id")
+        if cart_id:
+            cart_obj = Cart.objects.get(id=cart_id)
+            order.cart = cart_obj
+            order.subtotal = cart_obj.total
+            order.discount = 0
+            order.total = cart_obj.total
+            order.order_status = "Order Received"
+            del request.session['cart_id']  
+            order.save()
+
+        # else: 
+        #     return redirect("mainApp:home")
+        # return super().get_context()
+
+            # return redirect("mainApp:home")
+		
+        return render(request, 'checkout.html')
 
 
 

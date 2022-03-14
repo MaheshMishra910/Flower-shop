@@ -1,12 +1,15 @@
 from unicodedata import name
 from django.urls import path
 from .views import *
+from . import views
 
 
 app_name = "mainApp"
 urlpatterns = [
     path("", HomeView.as_view(),name="home"),
-    path("home", HomeView.as_view(),name="home"),
+    path("home", HomeView.as_view(),name="home"), 
+    # path("ch/", views.get_context,name="ch"), #HomeView.as_view()
+    path("checkout/", CheckoutView.get_context,name="ch"), #HomeView.as_view()
     path("contact/", ContactView.as_view(),name="contact"),
     path("about/", AboutView.as_view(), name="about"),
     path("blog/", BlogView.as_view(),name="blog"),
