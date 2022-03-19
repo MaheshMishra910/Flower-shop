@@ -234,13 +234,6 @@ class CheckoutView(TemplateView):
             order.order_status = "Order Received"
             del request.session['cart_id']  
             order.save()
-
-        # else: 
-        #     return redirect("mainApp:home")
-        # return super().get_context()
-
-            # return redirect("mainApp:home")
-		
         return render(request, 'checkout.html')
 
 
