@@ -1,9 +1,11 @@
 from urllib import request
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, CreateView
-
+from django.contrib.auth.models import User
+from django.contrib import messages
 from .forms import CheckoutForm
 from .models import *
+from .models import User
 from django.urls import reverse_lazy
 
 
@@ -240,3 +242,76 @@ class CheckoutView(TemplateView):
 
 class BlogView(TemplateView):
     template_name = "blog.html"
+
+# class CustomerRegistrationView(TemplateView):
+#     template_name = "register.html"
+
+#     def signup(request):
+#         if request.method == 'POST':
+#             username = request.POST['username']
+#             fullname = request.POST['fullname']
+#             email = request.POST['email']
+#             address = request.POST['address']
+#             password = request.POST['pass']
+#             cpassword = request.POST['cpass']
+            
+#             if password == cpassword:
+#                 if User.objects.filter(username = username).exists():
+#                     messages.error(request,'The username is already taken')
+#                     return redirect("mainApp:customerregistration")
+#                 elif User.objects.filter(email = email).exists():
+#                     messages.error(request,'The email is already taken')
+#                     return redirect("mainApp:customerregistration")
+#                 else:
+#                     user = User.objects.create_user(
+# 					username = username,
+# 					email = email,
+# 					password = password
+# 					)
+#                     user.save()
+
+#                     customer = Customer.objects.create_user(
+#                         full_name = fullname,
+#                         address = address
+#                     )
+#                     customer.save()
+#                     messages.success(request,'You are registered!')
+#                     return redirect("mainApp:customerregistration")
+#         return render(request,"mainApp:customerregistration")
+
+def signup(request):
+        if request.method == 'POST':
+            username = request.POST['username']
+            fullname = request.POST['fullname']
+            email = request.POST['email']
+            address = request.POST['address']
+            password = request.POST['pass']
+            cpassword = request.POST['cpass']
+            
+            if password == cpassword:
+                if User.objects.filter(username = username).exists():
+                    messages.error(request,'The username is already taken')
+                    return redirect("mainApp:customerregistration")
+                elif User.objects.filter(email = email).exists():
+                    messages.error(request,'The email is already taken')
+                    return redirect("mainApp:customerregistration")
+                else:
+                    user = User.objects.create_user(
+					username = username,
+					email = email,
+					password = password
+					)
+                    user.save()
+                
+                    customer = Customer()
+                    customer.user = User.objects.get(username=user)
+                    customer.full_name = fullname,
+                    customer.address = address
+                    customer.save()
+                    messages.success(request,'You are registered!')
+                    return redirect("mainApp:customerregistration")
+        return render(request,"register.html")
+
+
+class CustomerLoginView(TemplateView):
+    template_name = "login.html"

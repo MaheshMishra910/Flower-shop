@@ -26,6 +26,11 @@
     <link rel="stylesheet" href="{% static 'assets/css/plugins/animation.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/plugins/jqueryui.min.css' %}">
 
+  
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/csss/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/csss/main.css' %}">
+
     <!-- Vendor & Plugins CSS (Please remove the comment from below vendor.min.css & plugins.min.css for better website load performance and remove css files from avobe) -->
     <!--
     <script src="assets/js/vendor/vendor.min.js"></script>
@@ -70,7 +75,8 @@
                                                 <li><a href="#">Column One</a>
                                                     <ul>
                                                         <li><a href="compare.html">Compare Page</a></li>
-                                                        <li><a href="login-register.html">Login &amp; Register</a></li>
+                                                        <li><a href="{% url 'mainApp:customerregistration' %}">Register</a></li>
+                                                        <li><a href="{% url 'mainApp:customerlogin' %}">Login</a></li>
                                                         <li><a href="my-account.html">My Account Page</a></li>
                                                     </ul>
                                                 </li>
@@ -223,7 +229,8 @@
                                             <li class="mega-title has-children"><a href="#">Column One</a>
                                                 <ul class="dropdown">
                                                     <li><a href="compare.html">Compare Page</a></li>
-                                                    <li><a href="login-register.html">Login &amp; Register</a></li>
+                                                    <li><a href="{% url 'mainApp:customerregistration' %}">Register</a></li>
+                                                    <li><a href="{% url 'mainApp:customerlogin' %}">Login</a></li>
                                                     <li><a href="my-account.html">My Account Page</a></li>
                                                 </ul>
                                             </li>
@@ -433,6 +440,9 @@
     <!--  Scrollup JS -->
     <script src="{% static 'assets/js/plugins/scrollup.min.js' %}"></script>
     <script src="{% static 'assets/js/plugins/ajax-contact.js' %}"></script>
+
+    <!--===============================================================================================-->
+	
 
     <!-- Vendor & Plugins JS (Please remove the comment from below vendor.min.js & plugins.min.js for better website load performance and remove js files from avobe) -->
     <!--
