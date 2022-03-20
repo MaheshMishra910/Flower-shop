@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import CheckoutForm
 from .models import *
 from .models import User
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 
 
@@ -313,5 +314,18 @@ def signup(request):
         return render(request,"register.html")
 
 
-class CustomerLoginView(TemplateView):
-    template_name = "login.html"
+def view_authenticate_user(request):
+    if request.method == "GET": 
+        return render(request, 'login.html') 
+    else:
+        print(request.POST)
+        user = authenticate(username=request.POST['username'], password=request.POST['pass']) 
+        print(user)
+        if user is not None:  
+            login(request, user)
+            messages.warning(request,'Login sucessfully')
+            return redirect("mainApp:customerlogin")
+            
+        else: 
+            messages.warning(request,'Please chek your username and password!!')
+            return redirect("mainApp:customerlogin") 

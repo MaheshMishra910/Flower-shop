@@ -22,6 +22,6 @@ urlpatterns = [
     path("checkout/", CheckoutView.as_view(), name="checkout"),
     # path("register/", CustomerRegistrationView.as_view(), name="customerregistration"),
     path("register/", signup, name="customerregistration"),
-
-    path("login/", CustomerLoginView.as_view(), name="customerlogin"),
+    path("login/", view_authenticate_user, name="customerlogin")
+    # path("login/", CustomerLoginView.as_view(), name="customerlogin"),
 ]
