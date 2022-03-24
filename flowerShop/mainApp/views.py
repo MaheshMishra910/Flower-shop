@@ -7,6 +7,7 @@ from .forms import CheckoutForm
 from .models import *
 from .models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
 
@@ -189,7 +190,7 @@ class CheckoutView(TemplateView):
     template_name = "checkout.html"
     from_class = CheckoutForm
     sucess_url = reverse_lazy("mainApp:home")
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_id = self.request.session.get("cart_id", None)
@@ -329,3 +330,9 @@ def view_authenticate_user(request):
         else: 
             messages.warning(request,'Please chek your username and password!!')
             return redirect("mainApp:customerlogin") 
+
+class CustomerLogoutView(View):
+    def get(self,request):
+        logout(request)
+        return redirect("mainApp:home")
+

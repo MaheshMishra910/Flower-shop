@@ -70,7 +70,7 @@
                                                
                                             </ul>
                                         </li>
-                                        <li><a href="/other-page/">Pages</a>
+                                        <li><a href="#">Pages</a>
                                             <ul class="mega-menu">
                                                 <li><a href="#">Column One</a>
                                                     <ul>
@@ -110,6 +110,24 @@
                                         </li>
                                         <li><a href="{% url 'mainApp:about' %}">About</a></li>
                                         <li><a href="{% url 'mainApp:contact' %}">Contact</a></li>
+
+                                        <li><a href="#">Account</a>
+                                            <ul class="mega-menu">
+                                                
+                                                    <ul>
+                                                        {% if request.user.is_authenticated %}
+                                                        <a class="user-name">Welcome {{request.user.username}}</a>
+                                                        <li><a href="{% url 'mainApp:customerlogout' %}">Logout</a></li>
+                                                        {% else %}
+                                                        <li><a href="{% url 'mainApp:customerregistration' %}">Register</a></li>
+                                                        <li><a href="{% url 'mainApp:customerlogin' %}">Login</a></li>
+                                                        {% endif %}
+                                                    </ul>
+                                               
+                                             
+                                              
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </nav>
 
@@ -169,6 +187,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                             
 
                                 <div class="mobile-menu-btn d-block d-lg-none">
                                     <div class="off-canvas-btn">
