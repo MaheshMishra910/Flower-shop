@@ -359,3 +359,6 @@ class CustomerLogoutView(View):
         logout(request)
         return redirect("mainApp:home")
 
+class CustomerProfileView(TemplateView):
+    template_name = "my-account.html"
+
