@@ -1,6 +1,7 @@
+from multiprocessing import context
 from urllib import request
 from django.shortcuts import render, redirect
-from django.views.generic import View, TemplateView, CreateView
+from django.views.generic import View, TemplateView, CreateView, DetailView
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import CheckoutForm
@@ -325,7 +326,7 @@ def signup(request):
                 
                     customer = Customer()
                     customer.user = User.objects.get(username=user)
-                    customer.full_name = fullname,
+                    customer.full_name = fullname
                     customer.address = address
                     customer.save()
                     messages.success(request,'You are registered!')
@@ -361,4 +362,36 @@ class CustomerLogoutView(View):
 
 class CustomerProfileView(TemplateView):
     template_name = "my-account.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.customer:
+            pass
+        else:
+            return redirect("/login/?next=/profile/")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = self.request.user.customer
+        context["customer"] = customer
+        orders = Order.objects.filter(cart__customer=customer).order_by("-id")
+        context["orders"] = orders
+        return context
+
+class CustomerOrderDetailView(DetailView):
+    template_name = "customerorderdetails.html"
+    model = Order
+    context_object_name = "ord_obj"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.customer:
+            order_id = self.kwargs["pk"]
+            order = Order.objects.get(id=order_id)
+            if request.user.customer != order.cart.customer: #authenticated for other customer ordered details
+                return redirect("mainApp:customerprofile")
+        else:
+            return redirect("/login/?next=/profile/")
+        return super().dispatch(request, *args, **kwargs)
+
+    
 

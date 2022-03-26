@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+        <!-- breadcrumb-area start -->
+        <div class="breadcrumb-area section-ptb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="breadcrumb-title">Order Details</h2>
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list">
+                            <li class="breadcrumb-item"><a href="{% url 'mainApp:customerprofile' %}">My account</a></li>
+                            <li class="breadcrumb-item active">Order Details</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- breadcrumb-area end -->
+
+        <!-- main-content-wrap start -->
+        <div class="main-content-wrap section-ptb my-account-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="account-dashboard">
+                            <div class="dashboard-upper-info">
+                                <div class="row align-items-center no-gutters">
+                                    
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="d-single-info">
+                                            <p>Need Assistance? Customer service at.</p>
+                                            <p>maheshmishra910@gmail.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12">
+                                        <div class="d-single-info">
+                                            <p>Call </p>
+                                            <p>9842642482</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-12">
+                                        <div class="d-single-info text-lg-center">
+                                            <a href="{% url 'mainApp:mycart' %}" class="view-cart"><i class="fa fa-cart-plus"></i>view cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-12 col-lg-10">
+                                    <!-- Tab panes -->
+                                    <div class="tab-content dashboard-content">
+                                        <div class="tab-pane active" id="dashboard">
+                                            <h3>Ordered details </h3>
+                                            <div class="login">
+                                                <div class="login-form-container">
+                                                    <div class="account-login-form">
+                                                    <h4>Order Details</h4>
+                                                     <p><span class="font-weight-bold">Order ID:</span> {{ord_obj.id}} </p>
+                                                     <p><span class="font-weight-bold">Order Status:</span> {{ord_obj.order_status}} </p>
+                                                     <p><span class="font-weight-bold">Order On:</span> {{ord_obj.created_at}}({{ord_obj.created_at|timesince}} ago) </p>
+                                                     <br>
+                                                     <h4>Customer Information and Shipping Address</h4>
+                                                     <p><span class="font-weight-bold">Order by:</span> {{ord_obj.ordered_by}} </p>
+                                                     <p><span class="font-weight-bold">Contact Number:</span> {{ord_obj.mobile}} </p>
+                                                     <p><span class="font-weight-bold">Email:</span> {{ord_obj.email}} </p>
+                                                     <p><span class="font-weight-bold">Shipping Address:</span> {{ord_obj.shipping_address}} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane active" id="dashboard">
+                                            
+                                            <div class="login">
+                                                <div class="login-form-container">
+                                                    <div class="account-login-form">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>SN</th>
+                                                                    <th>Items</th>
+                                                                    <th>Rate</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Subtotal</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for cp in ord_obj.cart.cartproduct_set.all %}
+                                                                <tr>
+                                                                    <td>{{forloop.counter}}</td>
+                                                                    <td><a target="blank" href="{% url 'mainApp:productdetail' cp.product.slug %}">{{cp.product.title}}({{cp.product.id}})</a></td>
+                                                                    <td>{{cp.rate}}</td>
+                                                                    <td>{{cp.quantity}}</td>
+                                                                    <td>Rs.{{cp.subtotal}}</td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                                <tr>
+                                                                    <th>
+                                                                        <center>  Total:  </center>
+  
+                                                                      </th>
+                                                                    <th>
+                                                                      <center>  Rs. {{ord_obj.total}} </center>
+
+                                                                    </th>
+                                                                </tr>
+                                          
+                                                              
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                      
+                                        
+
+                    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main-content-wrap end -->
+
+
+{% endblock %}
