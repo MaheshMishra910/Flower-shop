@@ -1,15 +1,17 @@
+from msilib.schema import ListView
 from multiprocessing import context
 from urllib import request
 from django.shortcuts import render, redirect
-from django.views.generic import View, TemplateView, CreateView, DetailView
+from django.views.generic import View, TemplateView, FormView, DetailView, ListView
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import CheckoutForm
 from .models import *
+from .forms import *
 from .models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponse
 
 
@@ -341,7 +343,7 @@ def view_authenticate_user(request):
         print(request.POST)
         user = authenticate(username=request.POST['username'], password=request.POST['pass']) 
         print(user)
-        if user is not None:  
+        if user is not None and Customer.objects.filter(user=user).exists():  
             login(request, user)
             messages.warning(request,'Login sucessfully')
             # if "next" in request.GET:
@@ -364,7 +366,7 @@ class CustomerProfileView(TemplateView):
     template_name = "my-account.html"
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.customer:
+        if request.user.is_authenticated and Customer.objects.filter(user=request.user).exists():
             pass
         else:
             return redirect("/login/?next=/profile/")
@@ -384,7 +386,7 @@ class CustomerOrderDetailView(DetailView):
     context_object_name = "ord_obj"
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.customer:
+        if request.user.is_authenticated and Customer.objects.filter(user=request.user).exists():
             order_id = self.kwargs["pk"]
             order = Order.objects.get(id=order_id)
             if request.user.customer != order.cart.customer: #authenticated for other customer ordered details
@@ -393,5 +395,65 @@ class CustomerOrderDetailView(DetailView):
             return redirect("/login/?next=/profile/")
         return super().dispatch(request, *args, **kwargs)
 
-    
+#for admin pages
+
+class AdminLoginView(FormView):
+    template_name = "adminpages/adminlogin.html"
+    form_class = AdminLoginView
+    success_url = reverse_lazy("mainApp:adminhome")
+
+    def form_valid(self, form):
+        uname = form.cleaned_data.get("username")
+        pword = form.cleaned_data["password"]
+        usr = authenticate(username=uname, password=pword)
+        if usr is not None and Admin.objects.filter(user=usr).exists():
+            login(self.request, usr)
+        else:
+            return render(self.request, self.template_name, {"form": self.form_class, "error": "Incorrect username and password"})
+
+
+        return super().form_valid(form)
+
+class AdminRequiredMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and Admin.objects.filter(user=request.user).exists():
+            pass
+        else:
+            return redirect("/admin-login/")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AdminHomeView(AdminRequiredMixin, TemplateView):
+    template_name = "adminpages/adminhome.html"
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["pendingorders"] = Order.objects.filter(order_status="Order Received")
+
+        return context
+
+class AdminOrderDetailView(AdminRequiredMixin, DetailView):
+    template_name = "adminpages/adminorderdetail.html"
+    model = Order
+    context_object_name = "order_obj"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["allstatus"] = ORDER_STATUS
+        return context
+
+class AdminOrderListView(AdminRequiredMixin, ListView):
+    template_name = "adminpages/adminorderlist.html"
+    queryset = Order.objects.all().order_by("-id")
+    context_object_name = "allorders"
+
+class AdminOrderStatusChangeView(AdminRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        order_id = self.kwargs["pk"]
+        order_obj = Order.objects.get(id=order_id)
+        new_status = request.POST.get("status")
+        order_obj.order_status = new_status
+        order_obj.save()
+        return redirect(reverse_lazy("mainApp:adminorderdetail", kwargs={"pk": self.kwargs["pk"]}))
 
