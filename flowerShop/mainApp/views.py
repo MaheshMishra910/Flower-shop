@@ -9,9 +9,11 @@ from .forms import CheckoutForm
 from .models import *
 from .forms import *
 from .models import User
+from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
+from django.db.models import Q
 from django.http import HttpResponse
 
 
@@ -80,7 +82,11 @@ class ShopView(EcomMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['allcategories'] = Product.objects.all()
+        all_products = Product.objects.all()
+        paginator = Paginator(all_products, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['allcategories'] = product_list
         return context
 
 
@@ -332,7 +338,7 @@ def signup(request):
                     customer.address = address
                     customer.save()
                     messages.success(request,'You are registered!')
-                    return redirect("mainApp:customerregistration")
+                    return redirect("mainApp:customerlogin")
         return render(request,"register.html")
 
 
@@ -351,7 +357,7 @@ def view_authenticate_user(request):
             #     return next_url
             # else:
             #     return redirect("mainApp:customerlogin")
-            return redirect("mainApp:customerlogin")   
+            return redirect("mainApp:home")   
             
         else: 
             messages.warning(request,'Please chek your username and password!!')
@@ -395,6 +401,16 @@ class CustomerOrderDetailView(DetailView):
             return redirect("/login/?next=/profile/")
         return super().dispatch(request, *args, **kwargs)
 
+class SearchView(TemplateView):
+    template_name = "search.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kw = self.request.GET.get("keyword")
+        results = Product.objects.filter(Q(title__icontains=kw) | Q(description__icontains=kw))
+        context["results"] = results
+        return context
+
 #for admin pages
 
 class AdminLoginView(FormView):
@@ -421,6 +437,11 @@ class AdminRequiredMixin(object):
         else:
             return redirect("/admin-login/")
         return super().dispatch(request, *args, **kwargs)
+
+class AdminLogoutView(View):
+    def get(self,request):
+        logout(request)
+        return redirect("mainApp:adminhome")
 
 
 class AdminHomeView(AdminRequiredMixin, TemplateView):

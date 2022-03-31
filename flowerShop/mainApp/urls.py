@@ -27,7 +27,10 @@ urlpatterns = [
     path("logout/", CustomerLogoutView.as_view(), name="customerlogout"),
     path("profile/", CustomerProfileView.as_view(), name="customerprofile"),
     path("profile/order-<int:pk>/", CustomerOrderDetailView.as_view(), name="customerorderdetail"),
+    path("search/", SearchView.as_view(), name="search"),
+    #admin side urls
     path("admin-login/", AdminLoginView.as_view(), name="adminlogin"),
+    path("adminlogout/", AdminLogoutView.as_view(), name="adminlogout"),
     path("admin-home/", AdminHomeView.as_view(), name="adminhome"),
     path("admin-order/<int:pk>/", AdminOrderDetailView.as_view(), name="adminorderdetail"),
     path("admin-all-orders/", AdminOrderListView.as_view(), name="adminorderlist"),

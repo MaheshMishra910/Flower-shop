@@ -8,12 +8,46 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <a href="{% url 'mainApp:adminhome' %}">Home</a> |
         <a href="{% url 'mainApp:adminorderlist' %}">All Orders List</a> |
         <a href="{% url 'mainApp:home' %}" target="_blank">Visit site</a>
 
-    </div>
+    </div> -->
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <a class="navbar-brand" href="{% url 'mainApp:home' %}" target="_blank">Visit Site</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'mainApp:adminhome' %}">Home</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'mainApp:adminorderlist' %}">All Order list</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link">Welcome {{request.user.username}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'mainApp:adminlogout' %}">Logout</a>
+            </li>
+            {% endif %}
+
+            
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="{% url 'mainApp:search' %}" method="GET">
+            <input name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required>
+            <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+        </nav>
+
     {% block content %}
 
     {% endblock %}

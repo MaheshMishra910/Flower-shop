@@ -1,0 +1,114 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <!-- breadcrumb-area start -->
+        <div class="breadcrumb-area section-ptb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="breadcrumb-title">Search result</h2>
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list">
+                            <li class="breadcrumb-item"><a href="{% url 'mainApp:home' %}">Home</a></li>
+                            <li class="breadcrumb-item active">Search result</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- breadcrumb-area end -->
+
+
+        <!-- main-content-wrap start -->
+        <div class="main-content-wrap shop-page section-ptb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- shop-product-wrapper start -->
+                        <div class="shop-product-wrapper">
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- shop-top-bar start -->
+                                    <div class="shop-top-bar">
+                                        <!-- product-view-mode start -->
+
+                                        <div class="product-mode">
+                                            <!--shop-item-filter-list-->
+                                            <ul class="nav shop-item-filter-list" role="tablist">
+                                                
+                                                <li><a >Search result for<span class="breadcrumb-item active"> "{{request.GET.keyword}}"</span></a></li>
+                                            </ul>
+                                            <!-- shop-item-filter-list end -->
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- shop-top-bar end -->
+                                </div>
+                            </div>
+
+                             <!-- shop-products-wrap start -->
+                             <div class="shop-products-wrap">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="grid">
+                                        
+                                        <div class="shop-product-wrap">
+                                            
+                                            <div class="row">
+                                                {% for result in results %}
+                                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                                    <!-- single-product-wrap start -->
+                                                    <div class="single-product-wrap">
+                                                        <div class="product-image">
+                                                            <a href="{% url 'mainApp:productdetail' result.slug %}"><img src="{{result.image.url}}" alt="Produce Images"></a>
+                                                            <span class="label">30% Off</span>
+                                                            <div class="product-action">
+                                                                <a href="{% url 'mainApp:addtocart' result.id %}" class="add-to-cart"><i class="ion-bag"></i></a>
+                                                                <a href="#" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                                                <a href="#" class="quick-view" data-toggle="modal" data-target="#exampleModalCenter"><i class="ion-ios-search"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-content">
+                                                            <h3><a href="{% url 'mainApp:productdetail' result.slug %}">{{result.title}}</a></h3>
+                                                            <div class="price-box">
+                                                                <span class="old-price">Rs. {{result.marked_price}}</span>
+                                                                <span class="new-price">Rs. {{result.selling_prince}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- single-product-wrap end -->
+                                                </div>
+                                                {% endfor %}
+                             
+                                   
+                         
+                             
+                                 
+                                                
+                                      
+                                  
+                                               
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+               
+                                </div>
+                            </div>
+                            <!-- shop-products-wrap end -->
+
+                            
+                        </div>
+                        <!-- shop-product-wrapper end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main-content-wrap end -->
+
+
+{% endblock %}
