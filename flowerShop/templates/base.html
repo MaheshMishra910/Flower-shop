@@ -72,18 +72,8 @@
                                         </li>
                                         <li><a href="#">Pages</a>
                                             <ul class="mega-menu">
-                                                <li><a href="#">Column One</a>
-                                                    <ul>
-                                                        <li><a href="compare.html">Compare Page</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Column two</a>
-                                                    <ul>
-                                                        
-                                                        <li><a href="{% url 'mainApp:productdetail' ap.slug %">Product Details 2</a></li>
-                                                        <li><a href="{% url 'mainApp:checkout' %}">Checkout Page</a></li>
-                                                    </ul>
-                                                </li>
+                                                
+                                            
                                                 <li><a href="#">Column Three</a>
                                                     <ul>
                                                         <li><a href="error404.html">Error 404</a></li>
@@ -141,51 +131,15 @@
                                 </div>
 
                                 <div class="user-wrap">
-                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i></a>
+                                    <a href="{% url 'mainApp:mywishlist' %}"><i class="ion-android-favorite-outline"></i></a>
                                 </div>
-
-
+                                <div class="user-wrap">
+                                    <a href="{% url 'mainApp:mycompare' %}"><i class="ion-bag"></i></a>
+                                </div>
+    
                                 <div class="shopping-cart-wrap">
-                                    <a href="{% url 'mainApp:mycart' %}"><i class="ion-ios-cart-outline"></i> <span id="cart-total">2</span></a>
-                                    <ul class="mini-cart">
-                                        <li class="cart-item">
-                                            <div class="cart-image">
-                                                <a href="product-details.html"><img alt="" src="{% static 'assets/images/product/product-01.jpg' %}"></a>
-                                            </div>
-                                            <div class="cart-title">
-                                                <a href="product-details.html">
-                                                    <h4>Product Name 01</h4>
-                                                </a>
-                                                <span class="quantity">1 ×</span>
-                                                <div class="price-box"><span class="new-price">$130.00</span></div>
-                                                <a class="remove_from_cart" href="#"><i class="icon-trash icons"></i></a>
-                                            </div>
-                                        </li>
-                                        <li class="cart-item">
-                                            <div class="cart-image">
-                                                <a href="product-details.html"><img alt="" src="{% static 'assets/images/product/product-02.jpg' %}"></a>
-                                            </div>
-                                            <div class="cart-title">
-                                                <a href="product-details.html">
-                                                    <h4>Product Name 03</h4>
-                                                </a>
-                                                <span class="quantity">1 ×</span>
-                                                <div class="price-box"><span class="new-price">$130.00</span></div>
-                                                <a class="remove_from_cart" href="#"><i class="icon-trash icons"></i></a>
-                                            </div>
-                                        </li>
-                                        <li class="subtotal-titles">
-                                            <div class="subtotal-titles">
-                                                <h3>Sub-Total :</h3><span>$ 230.99</span>
-                                            </div>
-                                        </li>
-                                        <li class="mini-cart-btns">
-                                            <div class="cart-btns">
-                                                <a href="{% url 'mainApp:mycart' %}">View cart</a>
-                                                <a href="{% url 'mainApp:checkout' %}">Checkout</a>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <a href="{% url 'mainApp:mycart' %}"><i class="ion-ios-cart-outline"></i> <span id="cart-total"></span></a>
+                                    
                                 </div>
                              
 
@@ -361,9 +315,8 @@
                                     <li><a href="{% url 'mainApp:home' %}">Home</a></li>
                                     <li><a href="{% url 'mainApp:about' %}">About Us</a></li>
                                     <li><a href="{% url 'mainApp:contact' %}">Quick Contact</a></li>
-                                    <li><a href="{% url 'mainApp:blog' %}">Blog Pages</a></li>
-                                    <li><a href="#">Concord History</a></li>
-                                    <li><a href="#">Client Feed</a></li>
+                                    <!-- <li><a href="{% url 'mainApp:blog' %}">Blog Pages</a></li> -->
+
                                 </ul>
                             </div>
                         </div>

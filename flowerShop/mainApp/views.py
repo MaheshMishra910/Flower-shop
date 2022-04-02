@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
@@ -38,6 +38,7 @@ class HomeView(EcomMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_list'] = Product.objects.all().order_by("-id")[:8]
+        context['featured_product'] = Product.objects.all().order_by("id")[:6]
         return context
     
 
@@ -117,6 +118,7 @@ class AddToCartView(EcomMixin, TemplateView):
             cart_obj = Cart.objects.get(id=cart_id)
             this_product_in_cart = cart_obj.cartproduct_set.filter(
                 product=product_obj)
+            
             #for items already exists in cart
             if this_product_in_cart.exists():
                 cartproduct = this_product_in_cart.last()
@@ -125,6 +127,7 @@ class AddToCartView(EcomMixin, TemplateView):
                 cartproduct.save()
                 cart_obj.total += product_obj.selling_prince
                 cart_obj.save()
+                
             #for new item id added in cart
             else:
                 cartproduct = CartProduct.objects.create(
@@ -132,8 +135,6 @@ class AddToCartView(EcomMixin, TemplateView):
                 )
                 cart_obj.total += product_obj.selling_prince
                 cart_obj.save()
-                
-
 
 
         else:
@@ -145,8 +146,6 @@ class AddToCartView(EcomMixin, TemplateView):
             cart_obj.total += product_obj.selling_prince
             cart_obj.save()
 
-
-        
         return context
 
 class EmptyCartView(EcomMixin, View):
@@ -204,6 +203,150 @@ class MyCartView(EcomMixin, TemplateView):
         else:
             cart = None
         context['cart'] = cart
+        return context
+
+class AddToWishlistView(EcomMixin, TemplateView):
+    template_name = "addtowishlist.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #for get product id from requested url
+        product_id = self.kwargs['pro_id']
+        #for get product
+        product_obj = Product.objects.get(id=product_id)
+        #for cart ma aagadi xavane check garne
+        wishlist_id = self.request.session.get("wishlist_id",None)
+        if wishlist_id:
+            wishlist_obj = Wishlist.objects.get(id=wishlist_id)
+            this_product_in_wishlist = wishlist_obj.wishlistproduct_set.filter(
+                product=product_obj)
+            
+            #for items already exists in cart
+            #for items already exists in cart
+            if this_product_in_wishlist.exists():
+                wishlistproduct = this_product_in_wishlist.last()
+                wishlistproduct.quantity += 1
+                wishlistproduct.subtotal += product_obj.selling_prince
+                wishlistproduct.save()
+                wishlist_obj.total += product_obj.selling_prince
+                wishlist_obj.save()
+                
+            #for new item id added in cart
+            else:
+                wishlistproduct = WishlistProduct.objects.create(
+                    wishlist=wishlist_obj, product=product_obj, rate=product_obj.selling_prince, quantity=1, subtotal=product_obj.selling_prince
+                )
+                wishlist_obj.total += product_obj.selling_prince
+                wishlist_obj.save()
+
+
+        else:
+            wishlist_obj = Wishlist.objects.create(total=0)
+            self.request.session['wishlist_id'] = wishlist_obj.id
+            wishlistproduct = WishlistProduct.objects.create(
+                    wishlist=wishlist_obj, product=product_obj, rate=product_obj.selling_prince, quantity=1, subtotal=product_obj.selling_prince
+                )
+            wishlist_obj.total += product_obj.selling_prince
+            wishlist_obj.save()
+
+        return context
+class ManageWishlistView(EcomMixin, View):
+    def get(self, request, *args, **kwargs):
+        cp_id = self.kwargs["cp_id"]
+        action = request.GET.get("action")
+        cp_obj = WishlistProduct.objects.get(id=cp_id)
+        wishlist_obj = cp_obj.wishlist
+        
+        if action == "rmv":
+            wishlist_obj.total -= cp_obj.subtotal
+            wishlist_obj.save()
+            cp_obj.delete()
+            
+        else:
+            pass
+
+        return redirect("mainApp:mywishlist")
+
+class MyWishListView(TemplateView):
+    template_name = "wishlist.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        wishlist_id = self.request.session.get("wishlist_id", None)
+        if wishlist_id:
+            wishlist = Wishlist.objects.get(id=wishlist_id)
+        else:
+            wishlist = None
+        context['wishlist'] = wishlist
+        return context
+
+class AddToCompareView(EcomMixin, TemplateView):
+    template_name = "addtocompare.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #for get product id from requested url
+        product_id = self.kwargs['pro_id']
+        #for get product
+        product_obj = Product.objects.get(id=product_id)
+        #for cart ma aagadi xavane check garne
+        compare_id = self.request.session.get("compare_id",None)
+        if compare_id:
+            compare_obj = Compare.objects.get(id=compare_id)
+            this_product_in_compare = compare_obj.compareproduct_set.filter(
+                product=product_obj)
+            
+            #for items already exists in cart
+            if this_product_in_compare.exists():
+                compareproduct = this_product_in_compare.last()
+                compareproduct.save()
+                
+            #for new item id added in cart
+            else:
+                compareproduct = CompareProduct.objects.create(
+                    compare=compare_obj, product=product_obj, rate=product_obj.selling_prince, quantity=1, subtotal=product_obj.selling_prince
+                )
+                compare_obj.total += product_obj.selling_prince
+                compare_obj.save()
+
+
+        else:
+            compare_obj = Compare.objects.create(total=0)
+            self.request.session['compare_id'] = compare_obj.id
+            compareproduct = CompareProduct.objects.create(
+                    compare=compare_obj, product=product_obj, rate=product_obj.selling_prince, quantity=1, subtotal=product_obj.selling_prince
+                )
+            compare_obj.total += product_obj.selling_prince
+            compare_obj.save()
+
+        return context
+class ManageCompareView(EcomMixin, View):
+    def get(self, request, *args, **kwargs):
+        cp_id = self.kwargs["cp_id"]
+        action = request.GET.get("action")
+        cp_obj = CompareProduct.objects.get(id=cp_id)
+        compare_obj = cp_obj.compare
+        
+        if action == "rmv":
+            compare_obj.total -= cp_obj.subtotal
+            compare_obj.save()
+            cp_obj.delete()
+            
+        else:
+            pass
+
+        return redirect("mainApp:mycompare")
+class MyCompareView(EcomMixin, TemplateView):
+    template_name = "compare.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        compare_id = self.request.session.get("compare_id", None)
+        if compare_id:
+            compare = Compare.objects.get(id=compare_id)
+        else:
+            compare = None
+        context['compare'] = compare
         return context
 
 class CheckoutView(EcomMixin, TemplateView):
@@ -265,6 +408,9 @@ class CheckoutView(EcomMixin, TemplateView):
             order.order_status = "Order Received"
             del request.session['cart_id']  
             order.save()
+            messages.success(request,'Your order sucessfully done')
+            return redirect("mainApp:home")
+            
         return render(request, 'checkout.html')
 
 
@@ -357,6 +503,7 @@ def view_authenticate_user(request):
             #     return next_url
             # else:
             #     return redirect("mainApp:customerlogin")
+
             return redirect("mainApp:home")   
             
         else: 

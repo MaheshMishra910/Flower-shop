@@ -73,6 +73,34 @@ class CartProduct(models.Model):
     def __str__(self):
         return "Cart: "+str(self.cart.id) + "CartProduct: " + str(self.id)
 
+class Compare(models.Model):
+    customer = models.ForeignKey(
+        Customer, on_delete=models.SET_NULL, null=True,blank=True
+    )
+    total = models.PositiveIntegerField(default=0)
+
+
+class CompareProduct(models.Model):
+    compare = models.ForeignKey(Compare, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rate = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField()
+    subtotal = models.PositiveIntegerField()
+
+class Wishlist(models.Model):
+    customer = models.ForeignKey(
+        Customer, on_delete=models.SET_NULL, null=True,blank=True
+    )
+    total = models.PositiveIntegerField(default=0)
+
+class WishlistProduct(models.Model):
+    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rate = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField()
+    subtotal = models.PositiveIntegerField()
+
+
 ORDER_STATUS = {
     ("Order Received", "Order Received"),
     ("Order Processing", "Order Processing"),

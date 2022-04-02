@@ -28,6 +28,12 @@ urlpatterns = [
     path("profile/", CustomerProfileView.as_view(), name="customerprofile"),
     path("profile/order-<int:pk>/", CustomerOrderDetailView.as_view(), name="customerorderdetail"),
     path("search/", SearchView.as_view(), name="search"),
+    path("add-to-wishlist<int:pro_id>/", AddToWishlistView.as_view(), name="addtowishlist"),
+    path("wishlist/", MyWishListView.as_view(), name="mywishlist"),
+    path("manage-wishlist/<int:cp_id>/", ManageWishlistView.as_view(), name="managewishlist"),
+    path("add-to-compare<int:pro_id>/", AddToCompareView.as_view(), name="addtocompare"),
+    path("compare/", MyCompareView.as_view(), name="mycompare"),
+    path("manage-compare/<int:cp_id>/", ManageCompareView.as_view(), name="managecompare"),
     #admin side urls
     path("admin-login/", AdminLoginView.as_view(), name="adminlogin"),
     path("adminlogout/", AdminLogoutView.as_view(), name="adminlogout"),

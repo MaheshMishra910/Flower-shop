@@ -44,6 +44,7 @@
                                             </ul>
                                             <!-- shop-item-filter-list end -->
                                         </div>
+
                                         <!-- product-view-mode end -->
                                         <!-- product-short start -->
                                         <!-- <div class="product-short">
@@ -67,7 +68,7 @@
                                     <div class="tab-pane active" id="grid">
                                         
                                         <div class="shop-product-wrap">
-                                            
+
                                             <div class="row">
                                                 {% for ap in allcategories %}
                                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -78,8 +79,8 @@
                                                             <span class="label">30% Off</span>
                                                             <div class="product-action">
                                                                 <a href="{% url 'mainApp:addtocart' ap.id %}" class="add-to-cart"><i class="ion-bag"></i></a>
-                                                                <a href="#" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                                                <a href="#" class="quick-view" data-toggle="modal" data-target="#exampleModalCenter"><i class="ion-ios-search"></i></a>
+                                                                <a href="{% url 'mainApp:addtowishlist' ap.id %}" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                                                <a href="{% url 'mainApp:addtocompare' ap.id %}" class="quick-view" ><i class="ion-ios-search"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="product-content">

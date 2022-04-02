@@ -97,9 +97,9 @@
                             </div>
                             <!-- pro_rating end -->
                             <!-- pro_details start -->
-                            <div class="pro_details">
+                            <!-- <div class="pro_details">
                                 <p>{{product.description}}</p>
-                            </div>
+                            </div> -->
                             <!-- pro_details end -->
                             <!-- pro_dtl_prize start -->
                             <ul class="pro_dtl_prize">
@@ -111,7 +111,7 @@
                             <!-- pro_dtl_btn start -->
                             <ul class="pro_dtl_btn">
                                 <li><a href="{% url 'mainApp:addtocart' product.id %}" class="buy_now_btn">buy now</a></li>
-                                <li><a href="#"><i class="ion-heart"></i></a></li>
+                                <li><a href="{% url 'mainApp:addtowishlist' product.id %}"><i class="ion-heart"></i></a></li>
                             </ul>
                             <!-- pro_dtl_btn end -->
                             <!-- pro_social_share start -->
@@ -136,12 +136,7 @@
                                 <li class="active" role="presentation">
                                     <a data-toggle="tab" role="tab" href="#description" class="active">Description</a>
                                 </li>
-                                <li role="presentation">
-                                    <a data-toggle="tab" role="tab" href="#sheet">Data sheet</a>
-                                </li>
-                                <li role="presentation">
-                                    <a data-toggle="tab" role="tab" href="#reviews">Reviews</a>
-                                </li>
+                              
                             </ul>
                         </div>
                     </div>
@@ -157,7 +152,7 @@
                                     <div class="pro_feature">
                                         <h2 class="title_3">Features</h2>
                                         <ul class="feature_list">
-                                            <li><i class="ion-ios-play-outline"></i>Return Policy{{product.return_policy}}</li>
+                                            <li><i class="ion-ios-play-outline"></i>Return Policy: {{product.return_policy}}</li>
                                             
                                         </ul>
                                     </div>
@@ -165,124 +160,10 @@
                             </div>
                             <!-- End Single Content -->
                             <!-- Start Single Content -->
-                            <div class="product_tab_content tab-pane" id="sheet" role="tabpanel">
-                                <div class="pro_feature">
-                                    <h2 class="title_3">Data sheet</h2>
-                                    <ul class="feature_list">
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Duis aute irure dolor in reprehenderit in voluptate velit esse</a></li>
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Irure dolor in reprehenderit in voluptate velit esse</a></li>
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Irure dolor in reprehenderit in voluptate velit esse</a></li>
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Sed do eiusmod tempor incididunt ut labore et </a></li>
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Sed do eiusmod tempor incididunt ut labore et </a></li>
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Nisi ut aliquip ex ea commodo consequat.</a></li>
-                                        <li><a href="#"><i class="ion-ios-play-outline"></i>Nisi ut aliquip ex ea commodo consequat.</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                      
                             <!-- End Single Content -->
                             <!-- Start Single Content -->
-                            <div class="product_tab_content tab-pane" id="reviews" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-lg-7">
-
-                                        <!-- blog-details-wrapper -->
-                                        <div class="col-lg-12 review_address_inner">
-                                            <h5>Comments</h5>
-                                            <!-- Single Review -->
-                                            <div class="pro_review">
-                                                <div class="review_thumb">
-                                                    <img alt="review images" src="assets/images/other/review-01.jpg">
-                                                </div>
-                                                <div class="review_details">
-                                                    <div class="review_info">
-                                                        <h5><a href="#">Helen Nancy</a></h5>
-                                                        <div class="rating_send">
-                                                            <a href="#">Reply</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review_date">
-                                                        <span>30 May, 2019</span> <span>10:20 pm</span>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod teimpor in aliqua. Utf enim ad minim veniam,</p>
-
-                                                </div>
-                                            </div>
-                                            <!--// Single Review -->
-                                            <!-- Single Review -->
-                                            <div class="pro_review">
-                                                <div class="review_thumb">
-                                                    <img alt="review images" src="assets/images/other/review-02.jpg">
-                                                </div>
-                                                <div class="review_details">
-                                                    <div class="review_info">
-                                                        <h5><a href="#">tome Shetty</a></h5>
-                                                        <div class="rating_send">
-                                                            <a href="#">Reply</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review_date">
-                                                        <span>Sep 11, 2019</span>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit con dipis cing elitdpon aliqua minim veniam,</p>
-                                                </div>
-                                            </div>
-                                            <!--// Single Review -->
-                                            <!-- Single Review -->
-                                            <div class="pro_review">
-                                                <div class="review_thumb">
-                                                    <img alt="review images" src="assets/images/other/review-03.jpg">
-                                                </div>
-                                                <div class="review_details">
-                                                    <div class="review_info">
-                                                        <h5><a href="#">ketrin frans</a></h5>
-                                                        <div class="rating_send">
-                                                            <a href="#">Reply</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review_date">
-                                                        <span>Sep 25, 2019</span>
-                                                    </div>
-                                                    <p>dolore magna aliqua. Ut enim ad con Duis aute irur eritae pliciav aquuntu consectetur dunt ut labore et dolore magna aliqua. Ut enim adabz.</p>
-                                                </div>
-                                            </div>
-                                            <!--// Single Review -->
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="comments-reply-area">
-                                                <h5 class="comment-reply-title mb-30">Leave a Reply</h5>
-                                                <form action="#" class="comment-form-area">
-                                                    <div class="comment-input">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <p class="comment-form">
-                                                                    <input type="text" required="required" name="Name" placeholder="Name *">
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <p class="comment-form">
-                                                                    <input type="email" required="required" name="email" placeholder="Email *">
-                                                                </p>
-                                                            </div>
-
-                                                            <div class="col-lg-12">
-                                                                <p class="comment-form-comment">
-                                                                    <textarea class="comment-notes" required="required" placeholder="Comment *"></textarea>
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="comment-form-submit">
-                                                                    <button class="comment-submit">SUBMIT</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <!--// blog-details-wrapper -->
-                                    </div>
-                                </div>
-                            </div>
+              
                             <!-- End Single Content -->
                         </div>
                     </div>
