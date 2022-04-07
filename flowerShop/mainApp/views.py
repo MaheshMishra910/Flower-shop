@@ -1,20 +1,24 @@
 from msilib.schema import ListView
 from multiprocessing import context
+from sre_constants import SUCCESS
 from urllib import request
+from wsgiref.util import request_uri
 from django.shortcuts import render, redirect
-from django.views.generic import View, TemplateView, FormView, DetailView, ListView
+from django.views.generic import View, TemplateView, FormView, DetailView, ListView, CreateView
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import CheckoutForm
 from .models import *
 from .forms import *
+import requests
 from .models import User
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+
 
 
 # Create your views here.
@@ -349,18 +353,19 @@ class MyCompareView(EcomMixin, TemplateView):
         context['compare'] = compare
         return context
 
-class CheckoutView(EcomMixin, TemplateView):
+
+class CheckoutView(EcomMixin, CreateView):
     template_name = "checkout.html"
-    # from_class = CheckoutForm
-    # sucess_url = reverse_lazy("mainApp:home")
+    form_class = CheckoutForm
+    success_url = reverse_lazy("mainApp:home")
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.customer:
             pass
         else:
-            return redirect("/login/?next=/checkout")
+            return redirect("/login/?next=/checkout/")
         return super().dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_id = self.request.session.get("cart_id", None)
@@ -371,88 +376,64 @@ class CheckoutView(EcomMixin, TemplateView):
         context['cart'] = cart_obj
         return context
 
-    # def form_valid(self, form):
-    #     cart_id = self.request.session.get("cart_id")
-    #     if cart_id:
-    #         cart_obj = Cart.objects.get(id=cart_id)
-    #         form.instance.cart = cart_obj
-    #         form.instance.subtotal = cart_obj.total
-    #         form.instance.discount = 0
-    #         form.instance.total = cart_obj.total
-    #         form.instance.order_status = "Order Received"
-    #         del self.request.session['cart_id']   
-    #     else: 
-    #         return redirect("mainApp:home")
-    #     return super().form_valid(form)
-
-
-    def get_context(request):
-        if request.method == 'POST':
-            order = Order()
-            full_name = request.POST['fname']
-            address = request.POST['address']
-            phone = request.POST['pnumber']
-            memail = request.POST['femail']
-
-            order.ordered_by = full_name
-            order.email = memail
-            order.shipping_address = address
-            order.mobile = phone
-            cart_id = request.session.get("cart_id")
+    def form_valid(self, form):
+        cart_id = self.request.session.get("cart_id")
         if cart_id:
             cart_obj = Cart.objects.get(id=cart_id)
-            order.cart = cart_obj
-            order.subtotal = cart_obj.total
-            order.discount = 0
-            order.total = cart_obj.total
-            order.order_status = "Order Received"
-            del request.session['cart_id']  
-            order.save()
-            messages.success(request,'Your order sucessfully done')
+            form.instance.cart = cart_obj
+            form.instance.subtotal = cart_obj.total
+            form.instance.discount = 0
+            form.instance.total = cart_obj.total
+            form.instance.order_status = "Order Received"
+            del self.request.session['cart_id']
+            pm = form.cleaned_data.get("payment_method")
+            order = form.save()
+            if pm == "Khalti":
+                return redirect(reverse("mainApp:khaltirequest") + "?o_id=" + str(order.id))
+        else:
             return redirect("mainApp:home")
-            
-        return render(request, 'checkout.html')
+        return super().form_valid(form)
 
 
+class KhaltiRequestView(View):
+    def get(self, request, *args, **kwargs):
+        o_id = request.GET.get("o_id")
+        order = Order.objects.get(id=o_id)
+        context = {
+            "order": order
+        }
+        return render(request, "khaltirequest.html", context)
+
+class KhaltiVerifyView(View):
+    def get(self, request, *args, **kwargs):
+        token = request.GET.get("token")
+        amount = request.GET.get("amount")
+        o_id = request.GET.get("order_id")
+        url = "https://khalti.com/api/v2/payment/verify/"
+        payload = {
+            "token": token,
+            "amount": amount
+        }
+        headers = {
+            "Authorization": "Key test_secret_key_f627142f54044705a1313959332cbd0c"
+        }
+        order_obj = Order.objects.get(id=o_id)
+        response = requests.post(url, payload, headers=headers)
+        resp_dict = response.json()
+        if resp_dict.get("idx"):
+            success = True
+            order_obj.patment_completed = True
+            order_obj.save()
+        else:
+            success = False
+        data = {
+            "success": success
+        }
+        return JsonResponse(data)
 
 class BlogView(EcomMixin, TemplateView):
     template_name = "blog.html"
 
-# class CustomerRegistrationView(TemplateView):
-#     template_name = "register.html"
-
-#     def signup(request):
-#         if request.method == 'POST':
-#             username = request.POST['username']
-#             fullname = request.POST['fullname']
-#             email = request.POST['email']
-#             address = request.POST['address']
-#             password = request.POST['pass']
-#             cpassword = request.POST['cpass']
-            
-#             if password == cpassword:
-#                 if User.objects.filter(username = username).exists():
-#                     messages.error(request,'The username is already taken')
-#                     return redirect("mainApp:customerregistration")
-#                 elif User.objects.filter(email = email).exists():
-#                     messages.error(request,'The email is already taken')
-#                     return redirect("mainApp:customerregistration")
-#                 else:
-#                     user = User.objects.create_user(
-# 					username = username,
-# 					email = email,
-# 					password = password
-# 					)
-#                     user.save()
-
-#                     customer = Customer.objects.create_user(
-#                         full_name = fullname,
-#                         address = address
-#                     )
-#                     customer.save()
-#                     messages.success(request,'You are registered!')
-#                     return redirect("mainApp:customerregistration")
-#         return render(request,"mainApp:customerregistration")
 
 def signup(request):
         if request.method == 'POST':
