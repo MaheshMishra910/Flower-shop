@@ -31,7 +31,7 @@
                         <div class="coupon-area">
                             <!-- coupon-accordion start -->
                             <div class="coupon-accordion">
-                                <h3>Returning customer? <span class="coupon" id="showlogin"><a href="{% url 'mainApp:home' %}">Click here to login</a></span></h3>
+                                <h3>Returning Home? <span class="coupon" id="showlogin"><a href="{% url 'mainApp:home' %}">Click</a></span></h3>
                                 
                             </div>
                             <!-- coupon-accordion end -->
@@ -50,6 +50,7 @@
                                     {% csrf_token %}
                                     <h3 class="shoping-checkboxt-title">Billing Details</h3>
                                     {{form.as_p}}
+                                    <br>
                                     <button class="btn btn-info">Place order</button>
              
                                 </form>

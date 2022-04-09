@@ -146,9 +146,9 @@
                                 <a href="product-details.html"><img src="{{fp.image.url}}" alt="Produce Images"></a>
                                 <span class="label">30% Off</span>
                                 <div class="product-action">
-                                    <a href="{% url 'mainApp:addtocart' fp.id %}" class="add-to-cart"><i class="ion-bag"></i></a>
+                                    <a href="{% url 'mainApp:addtocart' fp.id %}" class="add-to-cart"><i class="ion-ios-cart-outline"></i></a>
                                     <a href="{% url 'mainApp:addtowishlist' fp.id %}" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                    <a href="{% url 'mainApp:addtocompare' fp.id %}" class="quick-view"><i class="ion-ios-search"></i></a>
+                                    <a href="{% url 'mainApp:addtocompare' fp.id %}" class="quick-view"><i class="ion-bag"></i></a>
                                 </div>
                             </div>
                             <div class="product-content">
@@ -230,9 +230,9 @@
                                 <a href="{% url 'mainApp:productdetail' p.slug %}"><img src="{{p.image.url}}" alt="Produce Images"></a>
                                 <span class="label">30% Off</span>
                                 <div class="product-action">
-                                    <a href="{% url 'mainApp:addtocart' p.id %}" class="add-to-cart"><i class="ion-bag"></i></a>
+                                    <a href="{% url 'mainApp:addtocart' p.id %}" class="add-to-cart"><i class="ion-ios-cart-outline"></i></a>
                                     <a href="{% url 'mainApp:addtowishlist' p.id %}" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                    <a href="{% url 'mainApp:addtocompare' p.id %}" class="quick-view" ><i class="ion-ios-search"></i></a>
+                                    <a href="{% url 'mainApp:addtocompare' p.id %}" class="quick-view" ><i class="ion-bag"></i></a>
                                 </div>
                                  
                             </div>

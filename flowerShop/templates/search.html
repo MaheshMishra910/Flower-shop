@@ -66,9 +66,9 @@
                                                             <a href="{% url 'mainApp:productdetail' result.slug %}"><img src="{{result.image.url}}" alt="Produce Images"></a>
                                                             <span class="label">30% Off</span>
                                                             <div class="product-action">
-                                                                <a href="{% url 'mainApp:addtocart' result.id %}" class="add-to-cart"><i class="ion-bag"></i></a>
-                                                                <a href="#" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                                                <a href="#" class="quick-view" data-toggle="modal" data-target="#exampleModalCenter"><i class="ion-ios-search"></i></a>
+                                                                <a href="{% url 'mainApp:addtocart' result.id %}" class="add-to-cart"><i class="ion-ios-cart-outline"></i></a>
+                                                                <a href="{% url 'mainApp:addtowishlist' result.id %}" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                                                <a href="{% url 'mainApp:addtocompare' result.id %}" class="quick-view"><i class="ion-bag"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="product-content">

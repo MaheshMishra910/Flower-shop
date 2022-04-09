@@ -46,34 +46,6 @@ class HomeView(EcomMixin, TemplateView):
         return context
     
 
-# def get_context(request):
-#     if request.method == 'POST':
-#         order = Order()
-#         full_name = request.POST['fname']
-#         address = request.POST['address']
-#         phone = request.POST['pnumber']
-#         memail = request.POST['femail']
-
-#         order.ordered_by = full_name
-#         order.email = memail
-#         order.shipping_address = address
-#         order.mobile = phone
-#         cart_id = request.session.get("cart_id")
-#         if cart_id:
-#             cart_obj = Cart.objects.get(id=cart_id)
-#             order.cart = cart_obj
-#             order.subtotal = cart_obj.total
-#             order.discount = 0
-#             order.total = cart_obj.total
-#             order.order_status = "Order Received"
-#             del request.session['cart_id']  
-#             order.save()
-		
-#     return render(request, 'checkout.html')
-
-    
-
-
 class ContactView(TemplateView):
     template_name = "contact-us.html"
     
@@ -605,4 +577,9 @@ class AdminOrderStatusChangeView(AdminRequiredMixin, View):
         order_obj.order_status = new_status
         order_obj.save()
         return redirect(reverse_lazy("mainApp:adminorderdetail", kwargs={"pk": self.kwargs["pk"]}))
+
+class AdminProductListView(AdminRequiredMixin, ListView):
+    template_name = "adminpages/adminproductlist.html"
+    queryset = Product.objects.all().order_by("-id")
+    context_object_name = "allproducts"
 

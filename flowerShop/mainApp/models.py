@@ -49,6 +49,13 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="products/images/")
+
+    def __str__(self):
+        return self.product.title
+
 
 class Cart(models.Model):
     customer = models.ForeignKey(
