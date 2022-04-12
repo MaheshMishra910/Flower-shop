@@ -144,3 +144,35 @@ class Order(models.Model):
         
         #     self.pk = self.__class__.objects.first().pk
         # super().save(*args, **kwargs)
+class QuickContact(models.Model):
+    name = models.CharField(max_length=20)
+    email = models.EmailField(max_length=20)
+    phone = models.CharField(max_length=14)
+    subject = models.CharField(max_length=30)
+    message = models.TextField(max_length=200)
+    
+ 
+    def __str__(self):
+        return self.name
+class TeamAbout(models.Model):
+    name = models.CharField(max_length=40)
+    position = models.CharField(max_length=40)
+    image = models.ImageField(upload_to="teams/images/")
+    social_media = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+class HomeSlider(models.Model):
+    name = models.CharField(max_length=40)
+    image = models.ImageField(upload_to="Home-Slider/images/")
+
+    def __str__(self):
+        return self.name
+class HomeBanner(models.Model):
+    name = models.CharField(max_length=40)
+    image = models.ImageField(upload_to="Home-banner/images/")
+    description = models.TextField(max_length=100)
+
+    def __str__(self):
+        return self.name

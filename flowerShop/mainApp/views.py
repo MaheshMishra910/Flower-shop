@@ -41,17 +41,41 @@ class HomeView(EcomMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_list'] = Product.objects.all().order_by("-id")[:8]
-        context['featured_product'] = Product.objects.all().order_by("id")[:6]
+        context['product_list'] = Product.objects.all()[:8]
+        context['featured_product'] = Product.objects.all().order_by("-id")[:6]
+        context['slider'] = HomeSlider.objects.all()[:3]
+        context['banner'] = HomeBanner.objects.all()[:3]
         return context
     
 
-class ContactView(TemplateView):
-    template_name = "contact-us.html"
-    
+# class ContactView(TemplateView):
+#     template_name = "contact-us.html"
+def contact(request):
+    if request.method == "POST":
+        contact = QuickContact()
+        name = request.POST.get('con_name')
+        email = request.POST.get('con_email')
+        phone = request.POST.get('con_phone')
+        subject = request.POST.get('con_subject')
+        message = request.POST.get('con_message')
+        
+ 
+        contact.name = name
+        contact.email = email
+        contact.phone = phone
+        contact.subject = subject
+        contact.message = message
+        
+        contact.save()    
+    return render(request, 'contact-us.html')   
 
 class AboutView(TemplateView):
     template_name = "about-us.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team_list'] = TeamAbout.objects.all()[:4]
+        return context
 
 
 class ShopView(EcomMixin, TemplateView):
@@ -59,7 +83,7 @@ class ShopView(EcomMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        all_products = Product.objects.all()
+        all_products = Product.objects.all().order_by("-id")
         paginator = Paginator(all_products, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
@@ -438,12 +462,16 @@ def signup(request):
                     customer.save()
                     messages.success(request,'You are registered!')
                     return redirect("mainApp:customerlogin")
+            else:
+                messages.error(request,"Password and confirm password does not match!!")
+                return redirect("mainApp:customerregistration")
+
         return render(request,"register.html")
 
 
 def view_authenticate_user(request):
     if request.method == "GET": 
-        return render(request, 'login.html') 
+        return render(request, 'login.html')
     else:
         print(request.POST)
         user = authenticate(username=request.POST['username'], password=request.POST['pass']) 
@@ -582,4 +610,9 @@ class AdminProductListView(AdminRequiredMixin, ListView):
     template_name = "adminpages/adminproductlist.html"
     queryset = Product.objects.all().order_by("-id")
     context_object_name = "allproducts"
+
+class AdminQuickMessageView(AdminRequiredMixin, ListView):
+    template_name = "adminpages/adminquickmessagelist.html"
+    queryset = QuickContact.objects.all().order_by("-id")
+    context_object_name = "allmessages"
 

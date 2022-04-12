@@ -1,0 +1,42 @@
+{% extends 'adminpages/adminbase.html' %}
+
+{% block title %}Admin All Products{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>All Messages</h3><hr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    {% for p in allmessages %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{p.name}}</td>
+                        <td>{{p.email}}</td>
+                        <td>{{p.phone}}</td>
+                        <td>{{p.subject}}</td>
+                        <td>{{p.message}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

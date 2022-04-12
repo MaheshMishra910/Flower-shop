@@ -33,6 +33,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'mainApp:adminproductlist' %}">All Products list</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'mainApp:adminquickmessagelist' %}">Quick Messages</a>
+            </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link">Welcome {{request.user.username}}</a>

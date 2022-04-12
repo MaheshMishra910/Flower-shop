@@ -6,9 +6,18 @@
 			<form class="login100-form validate-form" method="POST">
 				{% csrf_token %}
 				<span class="login100-form-title p-b-37">
-					{% for message in messages %}
-						<center><font color = "red">{{message}}</font></center>
-					{% endfor %}
+					<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+     
+                    </script>
+                     {% for mm in messages %} 
+                    <script>
+                     
+                      swal('{{ mm }}');
+                     
+                     
+                    </script>
+                     
+                    {% endfor %}
 					<br>
 					Sign In
 				</span>

@@ -10,7 +10,7 @@ urlpatterns = [
     path("home", HomeView.as_view(),name="home"), 
     # path("ch/", views.get_context,name="ch"), #HomeView.as_view()
     # path("ch/", CheckoutView.get_context,name="ch"), #HomeView.as_view()
-    path("contact/", ContactView.as_view(),name="contact"),
+    path("contact/", contact, name="contact"),
     path("about/", AboutView.as_view(), name="about"),
     path("blog/", BlogView.as_view(),name="blog"),
     path("shop/",ShopView.as_view(), name="shop"),
@@ -44,5 +44,5 @@ urlpatterns = [
     path("admin-all-orders/", AdminOrderListView.as_view(), name="adminorderlist"),
     path("admin-order-<int:pk>-change/", AdminOrderStatusChangeView.as_view(), name="adminorderstatuschange"),
     path("admin-product/list/", AdminProductListView.as_view(), name="adminproductlist"),
-
+    path("admin-quick-message/list/", AdminQuickMessageView.as_view(), name="adminquickmessagelist"),
 ]

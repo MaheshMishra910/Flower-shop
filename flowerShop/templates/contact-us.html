@@ -30,59 +30,65 @@
                         <div class="contact-form">
                             <div class="contact-form-info">
                                 <div class="contact-title">
-                                    <h3>TELL US YOUR PROJECT</h3>
+                                    <h3>WRITE YOUR MESSAGE</h3>
                                 </div>
-                                <form id="contact-form" action="http://hasthemes.com/file/mail.php" method="post">
+                                <form id="contact-form" method="POST">
+                                {% csrf_token %}
+                                    
                                     <div class="contact-page-form">
                                         <div class="contact-input">
                                             <div class="contact-inner">
-                                                <input name="con_name" type="text" placeholder="Name *">
+                                                <input name="con_name" type="text" placeholder="Name *" required>
                                             </div>
                                             <div class="contact-inner">
-                                                <input name="con_email" type="email" placeholder="Email *">
+                                                <input name="con_email" type="email" placeholder="Email *" required>
                                             </div>
                                             <div class="contact-inner">
-                                                <input name="con_phone" type="text" placeholder="Phone *">
+                                                <input name="con_phone" type="text" placeholder="Phone *" required>
                                             </div>
                                             <div class="contact-inner">
-                                                <input name="con_subject" type="text" placeholder="Subject *">
+                                                <input name="con_subject" type="text" placeholder="Subject *" required>
                                             </div>
                                             <div class="contact-inner contact-message">
-                                                <textarea name="con_message" placeholder="Message *"></textarea>
+                                                <textarea name="con_message" type="text" placeholder="Message *" required></textarea>
                                             </div>
                                         </div>
+                                        
                                         <div class="contact-submit-btn">
                                             <button class="submit-btn" type="submit">Send Email</button>
-                                            <p class="form-messege"></p>
+                                            <!-- <p class="form-messege"></p> -->
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+                  
                     <div class="col-lg-5 col-sm-12">
                         <div class="contact-infor">
                             <div class="contact-title">
                                 <h3>CONTACT US</h3>
                             </div>
                             <div class="contact-dec">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam nam ex odio expedita, officia temporibus ipsum, placeat magni quibusdam sint, atque distinctio </p>
+                                <p>If you have any query please contact below details. </p>
                             </div>
                             <div class="contact-address">
                                 <ul>
-                                    <li><i class="zmdi zmdi-home"></i> Address : No 40 Baria Sreet 133/2 NewYork City</li>
-                                    <li><i class="zmdi zmdi-email"></i> Infor@chairman.com</li>
-                                    <li><i class="zmdi zmdi-phone"></i> 0(1234) 567 890</li>
+                                    <li><i class="zmdi zmdi-home"></i> Address : Basundhara, Kathmandu</li>
+                                    <li><i class="zmdi zmdi-email"></i> maheshmishra910@gmail.com</li>
+                                    <li><i class="zmdi zmdi-phone"></i> 9842642482</li>
                                 </ul>
                             </div>
                             <div class="work-hours">
                                 <h5>Working hours</h5>
-                                <p><strong>Monday &ndash; Saturday</strong>: &nbsp;08AM &ndash; 22PM</p>
+                                <p><strong>Sunday &ndash; Friday</strong>: &nbsp;08AM &ndash; 06PM</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
+
+    
         <!--// Page Conttent -->
         {% endblock %}

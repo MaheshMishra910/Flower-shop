@@ -110,77 +110,26 @@
             <div class="our-team-area section-ptb">
                 <div class="container">
                     <div class="row">
+                        {% for ap in team_list %}
+                        <div class="col-lg-3">
+                            <div class="single-team mt--30">
+                                <div class="single-team-image">
+                                    <img src="{{ap.image.url}}" alt="">
+                                </div>
+                                <div class="single-team-info">
+                                    <h5>{{ap.name}}</h5>
+                                    <p>{{ap.position}}</p>
+                                </div>
+                                <ul class="personsl-socail">
+                                    <li><a href="{{ap.social_media}}"><i class="ion-social-facebook"></i></a></li>
+                                 
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
 
-                        <div class="col-lg-3">
-                            <div class="single-team mt--30">
-                                <div class="single-team-image">
-                                    <img src="assets/images/team/team-01.jpg" alt="">
-                                </div>
-                                <div class="single-team-info">
-                                    <h5>Arthur Lopez</h5>
-                                    <p>Designer</p>
-                                </div>
-                                <ul class="personsl-socail">
-                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-tumblr"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <div class="single-team mt--30">
-                                <div class="single-team-image">
-                                    <img src="assets/images/team/team-02.jpg" alt="">
-                                </div>
-                                <div class="single-team-info">
-                                    <h5>Arthur Lopez</h5>
-                                    <p>Designer</p>
-                                </div>
-                                <ul class="personsl-socail">
-                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-tumblr"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <div class="single-team mt--30">
-                                <div class="single-team-image">
-                                    <img src="assets/images/team/team-03.jpg" alt="">
-                                </div>
-                                <div class="single-team-info">
-                                    <h5>Robert Stewart</h5>
-                                    <p>Developer</p>
-                                </div>
-                                <ul class="personsl-socail">
-                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-tumblr"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="single-team mt--30">
-                                <div class="single-team-image">
-                                    <img src="assets/images/team/team-04.jpg" alt="">
-                                </div>
-                                <div class="single-team-info">
-                                    <h5>Developer</h5>
-                                    <p>Mark Howard</p>
-                                </div>
-                                <ul class="personsl-socail">
-                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-tumblr"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
+                   
+               
 
                     </div>
                 </div>
