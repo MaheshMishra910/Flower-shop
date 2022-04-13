@@ -176,3 +176,9 @@ class HomeBanner(models.Model):
 
     def __str__(self):
         return self.name
+class Quotes(models.Model):
+    author_name = models.CharField(max_length=40)
+    quotes = models.TextField(max_length=120)
+
+    def __str__(self):
+        return self.author_name

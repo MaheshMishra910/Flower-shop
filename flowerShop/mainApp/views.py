@@ -45,6 +45,7 @@ class HomeView(EcomMixin, TemplateView):
         context['featured_product'] = Product.objects.all().order_by("-id")[:6]
         context['slider'] = HomeSlider.objects.all()[:3]
         context['banner'] = HomeBanner.objects.all()[:3]
+        context['quotes'] = Quotes.objects.all()[:3]
         return context
     
 
@@ -75,6 +76,7 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['team_list'] = TeamAbout.objects.all()[:4]
+        context['quotes'] = Quotes.objects.all()[:3]
         return context
 
 

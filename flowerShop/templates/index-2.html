@@ -212,33 +212,19 @@
                 <div class="row">
                     <div class="col-lg-8 offset-md-2 col-md-8 col-sm-12">
                         <div class="testimonial-slider">
+                            {% for q in quotes %}
                             <div class="testimonial-inner text-center">
                                 <div class="test-cont">
                                     <img src="{% static 'assets/images/icon/quite.png' %}" alt="">
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form. There are many variations of passages.</p>
+                                    <p> {{q.quotes}}</p>
                                 </div>
                                 <div class="test-author">
-                                    <h5>JONATHON JORDAN</h5>
+                                    <h5>{{q.author_name}}</h5>
                                 </div>
                             </div>
-                            <div class="testimonial-inner text-center">
-                                <div class="test-cont">
-                                    <img src="{% static 'assets/images/icon/quite.png' %}" alt="">
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form. There are many variations of passages.</p>
-                                </div>
-                                <div class="test-author">
-                                    <h5>Michelle Mitchell</h5>
-                                </div>
-                            </div>
-                            <div class="testimonial-inner text-center">
-                                <div class="test-cont">
-                                    <img src="{% static 'assets/images/icon/quite.png' %}" alt="">
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form. There are many variations of passages.</p>
-                                </div>
-                                <div class="test-author">
-                                    <h5>Max Mitchell</h5>
-                                </div>
-                            </div>
+                            {% endfor %}
+  
+                       
                         </div>
                     </div>
                 </div>

@@ -68,6 +68,7 @@
                                                      <p><span class="font-weight-bold">Contact Number:</span> {{ord_obj.mobile}} </p>
                                                      <p><span class="font-weight-bold">Email:</span> {{ord_obj.email}} </p>
                                                      <p><span class="font-weight-bold">Shipping Address:</span> {{ord_obj.shipping_address}} </p>
+                                                     <p><span class="font-weight-bold">Payment Status: </span>Using {{ord_obj.payment_method}}({% if ord_obj.patment_completed %}Payment Completed{% else %}Not Paid{% endif %})</p>
                                                     </div>
                                                 </div>
                                             </div>

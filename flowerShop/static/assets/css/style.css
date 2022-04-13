@@ -8724,7 +8724,7 @@ img.mfp-img {
     - Breadcrumb Css
 ------------------------------------------*/
 .breadcrumb-area {
-  background: url("../images/bg/breadcrumb-bg.jpg") repeat scroll 0 0;
+  background: url("../images/innerhading1.jpeg") repeat scroll 0 0;
   text-align: center;
 }
 .breadcrumb-area h2 {
@@ -14455,7 +14455,7 @@ justify-content: space-between;*/
   20. Project Conunt Css  
 -----------------------*/
 .project-count-bg {
-  background: url(../images/bg/counter-bg.jpg);
+  background: url(../images/aboutimage.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
 }
