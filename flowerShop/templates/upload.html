@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+ <!-- Start Product Area -->
+ <div class="porduct-area section-pb">
+            
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="section-title text-center">
+                    <br>
+                    <br>
+                    <br><br><br><br>
+                    <h2><span>Image</span> Upload Here</h2>
+                    <form method="POST" action="{% url 'FlowersClassification:upload' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg"  name="document">
+                        <label for="imageUpload"></label>
+                        <button type="submit" class="btn continue-btn">Upload Files</button>
+                    
+                    </form> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="row product-two-row-4">
+
+            
+
+            <div class="col-lg-12">
+            
+                
+                
+                <!-- single-product-wrap start -->
+                {% if url %}
+                <div class="single-product-wrap">
+                      
+                    
+                    
+                    <div class="product-image">
+                        
+                        <a href="#"><img src="{{url}}" alt="Produce Images"></a>
+
+
+                         
+                    </div>
+                    <div class="product-content">
+
+                        <h1><a href="#"><span>{{text}}</span></a></h1>
+                        <h3><a href="{{ url }}">{{ url }}</a></h3>
+                       
+                    </div>
+                    
+                              
+                </div>
+                {% endif %}
+                
+                <!-- single-product-wrap end -->
+                
+                
+            </div>
+            
+     
+        </div>
+        
+        
+        
+            
+</div>
+
+{% endblock %}

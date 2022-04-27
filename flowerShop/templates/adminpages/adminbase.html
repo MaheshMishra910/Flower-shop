@@ -24,6 +24,7 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+            {% if request.user.is_authenticated %}
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'mainApp:adminhome' %}">Home</span></a>
             </li>
@@ -36,7 +37,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'mainApp:adminquickmessagelist' %}">Quick Messages</a>
             </li>
-            {% if request.user.is_authenticated %}
+            
             <li class="nav-item">
                 <a class="nav-link">Welcome {{request.user.username}}</a>
             </li>

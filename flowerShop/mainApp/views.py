@@ -77,6 +77,8 @@ class AboutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['team_list'] = TeamAbout.objects.all()[:4]
         context['quotes'] = Quotes.objects.all()[:3]
+        context['product'] = Product.objects.all()
+        context['customer'] = Customer.objects.all()
         return context
 
 
@@ -355,7 +357,7 @@ class MyCompareView(EcomMixin, TemplateView):
 class CheckoutView(EcomMixin, CreateView):
     template_name = "checkout.html"
     form_class = CheckoutForm
-    success_url = reverse_lazy("mainApp:home")
+    success_url = reverse_lazy("mainApp:checkoutsuccess")
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.customer:
@@ -392,6 +394,8 @@ class CheckoutView(EcomMixin, CreateView):
             return redirect("mainApp:home")
         return super().form_valid(form)
 
+class CheckoutSuccessView(TemplateView):
+    template_name = "checkoutcomplete.html"
 
 class KhaltiRequestView(View):
     def get(self, request, *args, **kwargs):
@@ -580,7 +584,7 @@ class AdminHomeView(AdminRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["pendingorders"] = Order.objects.filter(order_status="Order Received")
+        context["pendingorders"] = Order.objects.filter(order_status="Order Received").order_by("-id")
 
         return context
 
