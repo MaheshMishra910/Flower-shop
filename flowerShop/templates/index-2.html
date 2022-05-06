@@ -88,7 +88,7 @@
                         <div class="single-product-wrap">
                             <div class="product-image">
                                 <a href="{% url 'mainApp:productdetail' fp.slug %}"><img src="{{fp.image.url}}" alt="Produce Images"></a>
-                                <span class="label">30% Off</span>
+                                <!-- <span class="label">30% Off</span> -->
                                 <div class="product-action">
                                     <a href="{% url 'mainApp:addtocart' fp.id %}" class="add-to-cart"><i class="ion-ios-cart-outline"></i></a>
                                     <a href="{% url 'mainApp:addtowishlist' fp.id %}" class="wishlist"><i class="ion-android-favorite-outline"></i></a>
@@ -172,7 +172,7 @@
                             <div class="product-image">
                                 
                                 <a href="{% url 'mainApp:productdetail' p.slug %}"><img src="{{p.image.url}}" alt="Produce Images"></a>
-                                <span class="label">30% Off</span>
+                                <!-- <span class="label">30% Off</span> -->
                                 <div class="product-action">
                                     <a href="{% url 'mainApp:addtocart' p.id %}" class="add-to-cart"><i class="ion-ios-cart-outline"></i></a>
                                     <a href="{% url 'mainApp:addtowishlist' p.id %}" class="wishlist"><i class="ion-android-favorite-outline"></i></a>

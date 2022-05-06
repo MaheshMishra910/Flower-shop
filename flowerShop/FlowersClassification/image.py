@@ -30,7 +30,7 @@ def process_image(uploaded_file):
     # flower = ["daisy","dandelion", "rose","sunflower","tulip"]
     test_img = plt.imread('media/'+ uploaded_file)
     pred, probability = predict_one_image(test_img, model)
-    if probability > 0.5:
+    if probability > 0.4:
         text = "This is   " + flower[pred]
     else:
         text = "This is not a flower. Please upload flower photos"

@@ -47,10 +47,7 @@ class HomeView(EcomMixin, TemplateView):
         context['banner'] = HomeBanner.objects.all()[:3]
         context['quotes'] = Quotes.objects.all()[:3]
         return context
-    
 
-# class ContactView(TemplateView):
-#     template_name = "contact-us.html"
 def contact(request):
     if request.method == "POST":
         contact = QuickContact()
@@ -67,7 +64,9 @@ def contact(request):
         contact.subject = subject
         contact.message = message
         
-        contact.save()    
+        contact.save()
+
+
     return render(request, 'contact-us.html')   
 
 class AboutView(TemplateView):
@@ -228,12 +227,13 @@ class AddToWishlistView(EcomMixin, TemplateView):
             #for items already exists in cart
             #for items already exists in cart
             if this_product_in_wishlist.exists():
-                wishlistproduct = this_product_in_wishlist.last()
-                wishlistproduct.quantity += 1
-                wishlistproduct.subtotal += product_obj.selling_prince
-                wishlistproduct.save()
-                wishlist_obj.total += product_obj.selling_prince
-                wishlist_obj.save()
+                pass
+                # wishlistproduct = this_product_in_wishlist.last()
+                # wishlistproduct.quantity += 1
+                # wishlistproduct.subtotal += product_obj.selling_prince
+                # wishlistproduct.save()
+                # wishlist_obj.total += product_obj.selling_prince
+                # wishlist_obj.save()
                 
             #for new item id added in cart
             else:
@@ -262,8 +262,6 @@ class ManageWishlistView(EcomMixin, View):
         wishlist_obj = cp_obj.wishlist
         
         if action == "rmv":
-            wishlist_obj.total -= cp_obj.subtotal
-            wishlist_obj.save()
             cp_obj.delete()
             
         else:
@@ -302,8 +300,7 @@ class AddToCompareView(EcomMixin, TemplateView):
             
             #for items already exists in cart
             if this_product_in_compare.exists():
-                compareproduct = this_product_in_compare.last()
-                compareproduct.save()
+                pass
                 
             #for new item id added in cart
             else:
@@ -332,8 +329,6 @@ class ManageCompareView(EcomMixin, View):
         compare_obj = cp_obj.compare
         
         if action == "rmv":
-            compare_obj.total -= cp_obj.subtotal
-            compare_obj.save()
             cp_obj.delete()
             
         else:
@@ -621,4 +616,5 @@ class AdminQuickMessageView(AdminRequiredMixin, ListView):
     template_name = "adminpages/adminquickmessagelist.html"
     queryset = QuickContact.objects.all().order_by("-id")
     context_object_name = "allmessages"
+
 
